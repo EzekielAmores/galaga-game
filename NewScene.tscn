@@ -1,0 +1,47 @@
+[gd_scene load_steps=7 format=3 uid="uid://l60b8e284q6u"]
+
+[ext_resource type="PackedScene" uid="uid://do3rcjea5m1s" path="res://player.tscn" id="1_0x8ki"]
+[ext_resource type="PackedScene" uid="uid://blrtbcpvso5pp" path="res://bullet.tscn" id="2_ynad1"]
+[ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://enemy.tscn" id="3_0gnoo"]
+[ext_resource type="PackedScene" uid="uid://cbgdxfjbscp4a" path="res://coin.tscn" id="4_slsyb"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_evxul"]
+size = Vector2(100, 100)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0on0"]
+size = Vector2(210, 251)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Background" type="MeshInstance2D" parent="."]
+self_modulate = Color(0.881937, 0.881937, 0.881937, 1)
+position = Vector2(-1.5, 12.5)
+scale = Vector2(12.19, 7.49)
+mesh = SubResource("QuadMesh_evxul")
+
+[node name="Player" parent="." instance=ExtResource("1_0x8ki")]
+position = Vector2(233, 214)
+
+[node name="Bullet" parent="." instance=ExtResource("2_ynad1")]
+position = Vector2(104, 103)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Enemy" parent="." instance=ExtResource("3_0gnoo")]
+position = Vector2(-336, -206)
+
+[node name="Enemy2" parent="." instance=ExtResource("3_0gnoo")]
+position = Vector2(-178, -215)
+
+[node name="Enemy3" parent="." instance=ExtResource("3_0gnoo")]
+position = Vector2(225, -198)
+
+[node name="Coin" parent="." instance=ExtResource("4_slsyb")]
+position = Vector2(-173, 75)
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+collision_layer = 7
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(781, -238)
+shape = SubResource("RectangleShape2D_e0on0")

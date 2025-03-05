@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://1nxe8ts7nrgp"]
+
+[ext_resource type="Script" path="res://Scripts/enemy.gd" id="1_61vpo"]
+[ext_resource type="PackedScene" uid="uid://exphbtwvegwx" path="res://enemyBullet.tscn" id="2_s7rwx"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_77e8f"]
+size = Vector2(54, 54)
+
+[sub_resource type="QuadMesh" id="QuadMesh_fphg7"]
+size = Vector2(3, 3)
+
+[node name="Enemy" type="CharacterBody2D" node_paths=PackedStringArray("BulletTransform")]
+collision_mask = 2
+script = ExtResource("1_61vpo")
+bulletInstance = ExtResource("2_s7rwx")
+BulletTransform = NodePath("EmptyNode")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_77e8f")
+
+[node name="Sprite2D" type="MeshInstance2D" parent="."]
+self_modulate = Color(0.771579, 0.274489, 0.253679, 1)
+position = Vector2(-5.96046e-08, -3.8743e-07)
+scale = Vector2(18, 18)
+mesh = SubResource("QuadMesh_fphg7")
+
+[node name="EmptyNode" type="Node2D" parent="."]
+position = Vector2(0, 51)
