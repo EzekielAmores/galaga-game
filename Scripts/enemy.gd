@@ -10,11 +10,14 @@ var _velocity = Vector2(0, 1)
 
 var hp = 100
 
+var player: Player
+
 func _ready() -> void:
 	spawnBullets()
 
 func _process(delta: float) -> void:
 	if hp <= 0:
+		player.score += 20
 		queue_free()
 
 func _physics_process(delta: float) -> void:
@@ -31,3 +34,9 @@ func spawnBullets():
 		instance.position = BulletTransform.global_position
 		get_parent().add_child(instance)
 		await get_tree().create_timer(1).timeout
+
+
+func _on_area_2d_body_entered(body: Node2D) -> void:
+	if body is Bullet:
+		#print("kjsfhkasjfhasjksjkafhsjakfhasjkdf")
+		pass

@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://l60b8e284q6u"]
+[gd_scene load_steps=8 format=3 uid="uid://l60b8e284q6u"]
 
 [ext_resource type="PackedScene" uid="uid://do3rcjea5m1s" path="res://player.tscn" id="1_0x8ki"]
 [ext_resource type="PackedScene" uid="uid://blrtbcpvso5pp" path="res://bullet.tscn" id="2_ynad1"]
 [ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://enemy.tscn" id="3_0gnoo"]
 [ext_resource type="PackedScene" uid="uid://cbgdxfjbscp4a" path="res://coin.tscn" id="4_slsyb"]
+[ext_resource type="Script" path="res://Scripts/ui_manager.gd" id="5_gnfm4"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_evxul"]
 size = Vector2(100, 100)
@@ -19,8 +20,12 @@ position = Vector2(-1.5, 12.5)
 scale = Vector2(12.19, 7.49)
 mesh = SubResource("QuadMesh_evxul")
 
-[node name="Player" parent="." instance=ExtResource("1_0x8ki")]
+[node name="Player" parent="." node_paths=PackedStringArray("hpLabel", "scoreLabel", "coinLabel", "gameOverUI") instance=ExtResource("1_0x8ki")]
 position = Vector2(233, 214)
+hpLabel = NodePath("../CanvasLayer/GameUI/MainGameUI/HealthLabel")
+scoreLabel = NodePath("../CanvasLayer/GameUI/MainGameUI/ScoreLabel")
+coinLabel = NodePath("../CanvasLayer/GameUI/MainGameUI/CoinLabel")
+gameOverUI = NodePath("../CanvasLayer/GameUI/GameOverUI")
 
 [node name="Bullet" parent="." instance=ExtResource("2_ynad1")]
 position = Vector2(104, 103)
@@ -45,3 +50,181 @@ collision_layer = 7
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(781, -238)
 shape = SubResource("RectangleShape2D_e0on0")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="GameUI" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+
+[node name="UIManager" type="Control" parent="CanvasLayer/GameUI"]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("5_gnfm4")
+
+[node name="MainGameUI" type="Control" parent="CanvasLayer/GameUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ScoreLabel" type="Label" parent="CanvasLayer/GameUI/MainGameUI"]
+layout_mode = 0
+offset_left = 16.0
+offset_right = 215.0
+offset_bottom = 61.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Score: XXX"
+vertical_alignment = 1
+
+[node name="CoinLabel" type="Label" parent="CanvasLayer/GameUI/MainGameUI"]
+layout_mode = 0
+offset_left = 17.0
+offset_top = 58.0
+offset_right = 216.0
+offset_bottom = 119.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Coin: XXX"
+vertical_alignment = 1
+
+[node name="HealthLabel" type="Label" parent="CanvasLayer/GameUI/MainGameUI"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -199.0
+offset_bottom = 54.0
+grow_horizontal = 0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 30
+text = "Health: XXX"
+vertical_alignment = 1
+
+[node name="PauseUI" type="Control" parent="CanvasLayer/GameUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="CanvasLayer/GameUI/PauseUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PauseLabel" type="Label" parent="CanvasLayer/GameUI/PauseUI/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 109.0
+offset_right = 150.0
+offset_bottom = 178.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Pause Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="ResumeButton" type="Button" parent="CanvasLayer/GameUI/PauseUI/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -153.0
+offset_top = 245.0
+offset_right = 153.0
+offset_bottom = 309.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Resume Game"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/GameUI/PauseUI/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -153.0
+offset_top = 337.0
+offset_right = 153.0
+offset_bottom = 401.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Quit Game"
+
+[node name="GameOverUI" type="Control" parent="CanvasLayer/GameUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="Panel" parent="CanvasLayer/GameUI/GameOverUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="GameOverLabel" type="Label" parent="CanvasLayer/GameUI/GameOverUI/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -150.0
+offset_top = 109.0
+offset_right = 150.0
+offset_bottom = 178.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 50
+text = "Game Over"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="RestartButton" type="Button" parent="CanvasLayer/GameUI/GameOverUI/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -153.0
+offset_top = 245.0
+offset_right = 153.0
+offset_bottom = 309.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Restart Game"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/GameUI/GameOverUI/Background"]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -153.0
+offset_top = 337.0
+offset_right = 153.0
+offset_bottom = 401.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 30
+text = "Quit Game"
+
+[connection signal="pressed" from="CanvasLayer/GameUI/GameOverUI/Background/RestartButton" to="CanvasLayer/GameUI/UIManager" method="_on_restart_button_pressed"]
