@@ -1,28 +1,28 @@
 extends Node2D
 
+# Area in which Enemy Spawn
 @export var spawnedArea: CollisionShape2D
-var e: RectangleShape2D
 
+# Coin Scene
 @export var coinInstance: PackedScene
 
-# Called when the node enters the scene tree for the first time.
+@export var spawnRate = 10
+
 func _ready() -> void:
-	pass # Replace with function body.
+	var startVector = spawnedArea.get_parent().global_position
+	var endVector = spawnedArea.shape.size
 	
 	while true: 
 		var instance = coinInstance.instantiate()
-		instance.position = Vector2(randi_range(spawnedArea.get_parent().global_position.x, (spawnedArea.get_parent().global_position.x + spawnedArea.shape.size.x)), randi_range(spawnedArea.get_parent().global_position.y, (spawnedArea.get_parent().global_position.y + spawnedArea.shape.size.y)))
-		print("Instance Position is " + str(instance.position))
-		print(spawnedArea.get_parent().name)
-		print(spawnedArea.get_parent().global_position)
 		
+		var randVectorX = randi_range(startVector.x, (startVector.x + endVector.x))
+		var randVectorY = randi_range(startVector.y, (startVector.y + endVector.y))
+		
+		instance.position = Vector2(randVectorX, randVectorY)
 		owner.add_child(instance)
-		await get_tree().create_timer(1).timeout
+		await get_tree().create_timer(spawnRate).timeout
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
 	pass
-	#print(spawnedArea.shape.size)
-	#print(spawnedArea.global_position)
 	

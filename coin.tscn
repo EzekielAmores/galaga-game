@@ -1,6 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://cbgdxfjbscp4a"]
+[gd_scene load_steps=6 format=3 uid="uid://cbgdxfjbscp4a"]
 
 [ext_resource type="Script" path="res://Scripts/coin.gd" id="1_qble2"]
+[ext_resource type="Texture2D" uid="uid://dshufnvie36ei" path="res://Coin.png" id="2_wdoiy"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_cb2vd"]
 radius = 15.0
@@ -19,7 +20,14 @@ script = ExtResource("1_qble2")
 position = Vector2(-2.84217e-14, -4.54747e-13)
 shape = SubResource("CircleShape2D_cb2vd")
 
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture_filter = 1
+position = Vector2(-0.999996, -0.999996)
+scale = Vector2(1.9375, 1.9375)
+texture = ExtResource("2_wdoiy")
+
 [node name="CoinSprite" type="MeshInstance2D" parent="."]
+visible = false
 self_modulate = Color(0.910105, 0.90627, 0, 1)
 position = Vector2(2.38419e-07, 4.26173e-06)
 scale = Vector2(30.034, 30)

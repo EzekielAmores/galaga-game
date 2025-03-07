@@ -1,6 +1,7 @@
 [gd_scene load_steps=28 format=3 uid="uid://l60b8e284q6u"]
 
 [ext_resource type="PackedScene" uid="uid://do3rcjea5m1s" path="res://player.tscn" id="1_0x8ki"]
+[ext_resource type="Script" path="res://health_manager.gd" id="2_0hi8c"]
 [ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://enemy.tscn" id="3_0gnoo"]
 [ext_resource type="Texture2D" uid="uid://bk32wtq8epbnw" path="res://1GPA.png" id="3_egrd8"]
 [ext_resource type="Script" path="res://game_ui.gd" id="3_vpsul"]
@@ -9,7 +10,6 @@
 [ext_resource type="Script" path="res://spawn_manager.gd" id="5_4xkjn"]
 [ext_resource type="Texture2D" uid="uid://dmy6xwojhesq3" path="res://ScoreBackground.png" id="5_a0gnn"]
 [ext_resource type="Texture2D" uid="uid://ct7ydgqswn77e" path="res://HealthBackground.png" id="5_a8nle"]
-[ext_resource type="Script" path="res://Scripts/ui_manager.gd" id="5_gnfm4"]
 [ext_resource type="FontFile" uid="uid://cdo1tmc4hynq0" path="res://RasterForgeRegular-JpBgm.ttf" id="5_pb88a"]
 [ext_resource type="Script" path="res://enemy_path_holder.gd" id="5_qwo3g"]
 [ext_resource type="Texture2D" uid="uid://dyf6bsrrn3a6n" path="res://2GPA.png" id="5_uovwj"]
@@ -77,17 +77,11 @@ PauseUI = NodePath("PauseUI")
 ResumeButton = NodePath("PauseUI/Background/ResumeButton")
 LeaveButton = NodePath("PauseUI/Background/QuitButton")
 
-[node name="UIManager" type="Control" parent="CanvasLayer/GameUI" node_paths=PackedStringArray("resumeButton", "gameOverUI", "player", "hpText", "coinText", "scoreText", "hpImage")]
+[node name="UIManager" type="Control" parent="CanvasLayer/GameUI" node_paths=PackedStringArray("hpImage", "resumeButton", "gameOverUI", "player", "hpText", "coinText", "scoreText")]
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
-script = ExtResource("5_gnfm4")
-resumeButton = NodePath("../GameOverUI/Background/RestartButton")
-gameOverUI = NodePath("../GameOverUI")
-player = NodePath("../../../Player")
-hpText = NodePath("../MainGameUI/Health_n_Coin_Background/HP_Text")
-coinText = NodePath("../MainGameUI/Health_n_Coin_Background/Coin_Text")
-scoreText = NodePath("../MainGameUI/Score_Background/Score_Text")
+script = ExtResource("2_0hi8c")
 hpImage = NodePath("../MainGameUI/Health_n_Coin_Background/HP_Image")
 oneGpa = ExtResource("3_egrd8")
 oneFiveGpa = ExtResource("4_te8ty")
@@ -97,6 +91,12 @@ threeGpa = ExtResource("7_725k7")
 threeFiveGpa = ExtResource("8_pn4oy")
 fourGpa = ExtResource("9_ujqe8")
 fiveGpa = ExtResource("10_xrfyk")
+resumeButton = NodePath("../GameOverUI/Background/RestartButton")
+gameOverUI = NodePath("../GameOverUI")
+player = NodePath("../../../Player")
+hpText = NodePath("../MainGameUI/Health_n_Coin_Background/HP_Text")
+coinText = NodePath("../MainGameUI/Health_n_Coin_Background/Coin_Text")
+scoreText = NodePath("../MainGameUI/Score_Background/Score_Text")
 
 [node name="MainGameUI" type="Control" parent="CanvasLayer/GameUI"]
 layout_mode = 1

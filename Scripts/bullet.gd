@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name Bullet
 
 var _velocity = Vector2(0, -1)
-@export var speed = 1000
+@export var speed = 500
 
 var _owner: Player
 
