@@ -1,16 +1,42 @@
-[gd_scene load_steps=8 format=3 uid="uid://l60b8e284q6u"]
+[gd_scene load_steps=14 format=3 uid="uid://l60b8e284q6u"]
 
 [ext_resource type="PackedScene" uid="uid://do3rcjea5m1s" path="res://player.tscn" id="1_0x8ki"]
-[ext_resource type="PackedScene" uid="uid://blrtbcpvso5pp" path="res://bullet.tscn" id="2_ynad1"]
 [ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://enemy.tscn" id="3_0gnoo"]
+[ext_resource type="Script" path="res://game_ui.gd" id="3_vpsul"]
 [ext_resource type="PackedScene" uid="uid://cbgdxfjbscp4a" path="res://coin.tscn" id="4_slsyb"]
+[ext_resource type="Script" path="res://spawn_manager.gd" id="5_4xkjn"]
 [ext_resource type="Script" path="res://Scripts/ui_manager.gd" id="5_gnfm4"]
+[ext_resource type="Script" path="res://enemy_path_holder.gd" id="5_qwo3g"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_evxul"]
 size = Vector2(100, 100)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_e0on0"]
-size = Vector2(210, 251)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i02bu"]
+size = Vector2(1150, 253)
+
+[sub_resource type="Curve2D" id="Curve2D_tshhr"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -92, 1, 0, 0, 0, 0, 104, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_pt1la"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 121, 480, 0, 0, 0, 0, 7, 596)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_03fn4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 55, 105, 0, 0, 0, 0, 184, 229)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_2tq7s"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, -4, 119, 0, 0, 0, 0, -5, -17)
+}
+point_count = 2
 
 [node name="Node2D" type="Node2D"]
 
@@ -26,34 +52,18 @@ hpLabel = NodePath("../CanvasLayer/GameUI/MainGameUI/HealthLabel")
 scoreLabel = NodePath("../CanvasLayer/GameUI/MainGameUI/ScoreLabel")
 coinLabel = NodePath("../CanvasLayer/GameUI/MainGameUI/CoinLabel")
 gameOverUI = NodePath("../CanvasLayer/GameUI/GameOverUI")
-
-[node name="Bullet" parent="." instance=ExtResource("2_ynad1")]
-position = Vector2(104, 103)
+fireRate = 0.05
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="Enemy" parent="." instance=ExtResource("3_0gnoo")]
-position = Vector2(-336, -206)
+[node name="Temporary GameObject" type="Node2D" parent="."]
 
-[node name="Enemy2" parent="." instance=ExtResource("3_0gnoo")]
-position = Vector2(-178, -215)
-
-[node name="Enemy3" parent="." instance=ExtResource("3_0gnoo")]
-position = Vector2(225, -198)
-
-[node name="Coin" parent="." instance=ExtResource("4_slsyb")]
+[node name="Coin" parent="Temporary GameObject" instance=ExtResource("4_slsyb")]
 position = Vector2(-173, 75)
-
-[node name="StaticBody2D" type="StaticBody2D" parent="."]
-collision_layer = 7
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
-position = Vector2(781, -238)
-shape = SubResource("RectangleShape2D_e0on0")
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
-[node name="GameUI" type="Control" parent="CanvasLayer"]
+[node name="GameUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("PauseUI", "ResumeButton", "LeaveButton")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -62,6 +72,10 @@ grow_horizontal = 2
 grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
+script = ExtResource("3_vpsul")
+PauseUI = NodePath("PauseUI")
+ResumeButton = NodePath("PauseUI/Background/ResumeButton")
+LeaveButton = NodePath("PauseUI/Background/QuitButton")
 
 [node name="UIManager" type="Control" parent="CanvasLayer/GameUI"]
 anchors_preset = 0
@@ -226,5 +240,140 @@ offset_bottom = 401.0
 grow_horizontal = 2
 theme_override_font_sizes/font_size = 30
 text = "Quit Game"
+
+[node name="SpawnManager" type="Node2D" parent="." node_paths=PackedStringArray("spawnedArea")]
+script = ExtResource("5_4xkjn")
+spawnedArea = NodePath("Area2D/CollisionShape2D")
+coinInstance = ExtResource("4_slsyb")
+
+[node name="Area2D" type="Area2D" parent="SpawnManager"]
+position = Vector2(-576, -689)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SpawnManager/Area2D"]
+position = Vector2(575, 126.5)
+shape = SubResource("RectangleShape2D_i02bu")
+
+[node name="Node2D" type="Node2D" parent="."]
+position = Vector2(-136, -238)
+
+[node name="HorizontalPathHolder" type="CharacterBody2D" parent="Node2D" node_paths=PackedStringArray("enemyPath")]
+script = ExtResource("5_qwo3g")
+enemyPath = NodePath("HorizontalPath/PathFollow2D")
+
+[node name="HorizontalPath" type="Path2D" parent="Node2D/HorizontalPathHolder"]
+curve = SubResource("Curve2D_tshhr")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/HorizontalPathHolder/HorizontalPath"]
+position = Vector2(-91.0894, 0.995354)
+rotation = -0.005102
+progress = 1.07802
+rotates = false
+
+[node name="Enemy6" parent="Node2D/HorizontalPathHolder/HorizontalPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(212.408, -61.9124)
+rotation = 0.005102
+
+[node name="Enemy7" parent="Node2D/HorizontalPathHolder/HorizontalPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(36.4154, -63.8104)
+rotation = 0.005102
+
+[node name="Enemy8" parent="Node2D/HorizontalPathHolder/HorizontalPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(124.414, -63.3614)
+rotation = 0.005102
+
+[node name="Enemy5" parent="Node2D/HorizontalPathHolder/HorizontalPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(-55.5681, -67.2797)
+rotation = 0.005102
+
+[node name="DiagonalLDPathHolder3" type="CharacterBody2D" parent="Node2D" node_paths=PackedStringArray("enemyPath")]
+position = Vector2(-15, 120)
+script = ExtResource("5_qwo3g")
+enemyPath = NodePath("Path2D/PathFollow2D")
+
+[node name="Path2D" type="Path2D" parent="Node2D/DiagonalLDPathHolder3"]
+position = Vector2(19, -281)
+curve = SubResource("Curve2D_pt1la")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/DiagonalLDPathHolder3/Path2D"]
+position = Vector2(120.326, 480.686)
+rotation = -0.005102
+progress = 1.07802
+rotates = false
+
+[node name="Enemy6" parent="Node2D/DiagonalLDPathHolder3/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(212.408, -61.9124)
+rotation = 0.005102
+
+[node name="Enemy7" parent="Node2D/DiagonalLDPathHolder3/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(36.4154, -63.8104)
+rotation = 0.005102
+
+[node name="Enemy8" parent="Node2D/DiagonalLDPathHolder3/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(124.414, -63.3614)
+rotation = 0.005102
+
+[node name="Enemy5" parent="Node2D/DiagonalLDPathHolder3/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(-55.5681, -67.2797)
+rotation = 0.005102
+
+[node name="DiagonalRDPathHolder2" type="CharacterBody2D" parent="Node2D" node_paths=PackedStringArray("enemyPath")]
+position = Vector2(321, -204)
+script = ExtResource("5_qwo3g")
+enemyPath = NodePath("DiagonalRDPath/PathFollow2D")
+
+[node name="DiagonalRDPath" type="Path2D" parent="Node2D/DiagonalRDPathHolder2"]
+curve = SubResource("Curve2D_03fn4")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/DiagonalRDPathHolder2/DiagonalRDPath"]
+position = Vector2(55.6743, 105.648)
+rotation = -0.005102
+progress = 1.07802
+rotates = false
+
+[node name="Enemy6" parent="Node2D/DiagonalRDPathHolder2/DiagonalRDPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(212.408, -61.9124)
+rotation = 0.005102
+
+[node name="Enemy7" parent="Node2D/DiagonalRDPathHolder2/DiagonalRDPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(36.4154, -63.8104)
+rotation = 0.005102
+
+[node name="Enemy8" parent="Node2D/DiagonalRDPathHolder2/DiagonalRDPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(124.414, -63.3614)
+rotation = 0.005102
+
+[node name="Enemy5" parent="Node2D/DiagonalRDPathHolder2/DiagonalRDPath/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(-55.5681, -67.2797)
+rotation = 0.005102
+
+[node name="VerticalPathHolder" type="CharacterBody2D" parent="Node2D" node_paths=PackedStringArray("enemyPath")]
+position = Vector2(300, -14)
+script = ExtResource("5_qwo3g")
+enemyPath = NodePath("Path2D/PathFollow2D")
+
+[node name="Path2D" type="Path2D" parent="Node2D/VerticalPathHolder"]
+curve = SubResource("Curve2D_2tq7s")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Node2D/VerticalPathHolder/Path2D"]
+position = Vector2(-4.00608, 118.173)
+rotation = -0.005102
+progress = 1.07802
+rotates = false
+
+[node name="Enemy6" parent="Node2D/VerticalPathHolder/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(212.408, -61.9124)
+rotation = 0.005102
+
+[node name="Enemy7" parent="Node2D/VerticalPathHolder/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(36.4154, -63.8104)
+rotation = 0.005102
+
+[node name="Enemy8" parent="Node2D/VerticalPathHolder/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(124.414, -63.3614)
+rotation = 0.005102
+
+[node name="Enemy5" parent="Node2D/VerticalPathHolder/Path2D/PathFollow2D" instance=ExtResource("3_0gnoo")]
+position = Vector2(-55.5681, -67.2797)
+rotation = 0.005102
 
 [connection signal="pressed" from="CanvasLayer/GameUI/GameOverUI/Background/RestartButton" to="CanvasLayer/GameUI/UIManager" method="_on_restart_button_pressed"]

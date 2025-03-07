@@ -17,7 +17,6 @@ script = ExtResource("1_qble2")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-2.84217e-14, -4.54747e-13)
-scale = Vector2(1, 1)
 shape = SubResource("CircleShape2D_cb2vd")
 
 [node name="CoinSprite" type="MeshInstance2D" parent="."]

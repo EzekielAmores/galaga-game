@@ -11,6 +11,8 @@ class_name Player
 
 @export var gameOverUI: Control
 
+@export var fireRate = 0.1
+
 var hp = 100
 var score = 0
 var coin = 0
@@ -43,7 +45,7 @@ func spawnBullets():
 			instance._owner = self
 		get_parent().add_child(instance)
 		
-		await get_tree().create_timer(0.1).timeout
+		await get_tree().create_timer(fireRate).timeout
 
 
 func _physics_process(delta: float) -> void:

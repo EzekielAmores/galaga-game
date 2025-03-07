@@ -1,0 +1,73 @@
+[gd_scene load_steps=3 format=3 uid="uid://cs72xsem0qhlp"]
+
+[ext_resource type="Script" path="res://main_menu_ui.gd" id="1_e0vbh"]
+[ext_resource type="Texture2D" uid="uid://bnfmxlhh8xyf7" path="res://483014656_657915130107089_7258478912965656985_n.png" id="1_qcjtp"]
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenuUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("startButton", "quitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+script = ExtResource("1_e0vbh")
+startButton = NodePath("StartButton")
+quitButton = NodePath("QuitButton")
+
+[node name="TitleText" type="Label" parent="CanvasLayer/MainMenuUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -51.5
+offset_right = 51.5
+offset_bottom = 23.0
+grow_horizontal = 2
+theme_override_font_sizes/font_size = 70
+text = "Galaga Game"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="CanvasLayer/MainMenuUI"]
+layout_mode = 0
+offset_left = 299.0
+offset_top = 14.0
+offset_right = 821.0
+offset_bottom = 275.0
+texture = ExtResource("1_qcjtp")
+
+[node name="StartButton" type="Button" parent="CanvasLayer/MainMenuUI"]
+layout_mode = 0
+offset_left = 430.0
+offset_top = 319.0
+offset_right = 690.0
+offset_bottom = 382.0
+theme_override_font_sizes/font_size = 30
+text = "Start"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer/MainMenuUI"]
+visible = false
+layout_mode = 0
+offset_left = 427.0
+offset_top = 389.0
+offset_right = 687.0
+offset_bottom = 452.0
+theme_override_font_sizes/font_size = 30
+text = "Options
+"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI"]
+layout_mode = 0
+offset_left = 429.0
+offset_top = 397.0
+offset_right = 689.0
+offset_bottom = 460.0
+theme_override_font_sizes/font_size = 30
+text = "Quit
+"

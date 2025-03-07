@@ -32,7 +32,11 @@ func spawnBullets():
 		#print("Hello po, shoot")
 		var instance = bulletInstance.instantiate()
 		instance.position = BulletTransform.global_position
-		get_parent().add_child(instance)
+		
+		#get_parent().add_child(instance)
+		# Can't use get parent since it only gets the node above this one
+		# Should you owner to get the root node
+		owner.add_child(instance)
 		await get_tree().create_timer(1).timeout
 
 
