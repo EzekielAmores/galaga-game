@@ -1,0 +1,110 @@
+[gd_scene load_steps=6 format=3 uid="uid://dhtbsusn2mkr5"]
+
+[ext_resource type="Script" path="res://Scripts/enemy_path_holder.gd" id="1_67vh1"]
+[ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://Objects/enemy.tscn" id="2_0jqqh"]
+
+[sub_resource type="Curve2D" id="Curve2D_2tq7s"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_pt1la"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -100, 100)
+}
+point_count = 2
+
+[sub_resource type="Curve2D" id="Curve2D_03fn4"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 100, 100)
+}
+point_count = 2
+
+[node name="RandomEnemyPaths" type="Node2D"]
+visible = false
+position = Vector2(1247, -697)
+
+[node name="VD_Path" type="CharacterBody2D" parent="." node_paths=PackedStringArray("enemyPath")]
+script = ExtResource("1_67vh1")
+enemyPath = NodePath("Vertical_Down_Path/PathFollow2D")
+
+[node name="Vertical_Down_Path" type="Path2D" parent="VD_Path"]
+curve = SubResource("Curve2D_2tq7s")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="VD_Path/Vertical_Down_Path"]
+position = Vector2(0, 100)
+rotation = -0.005102
+rotates = false
+
+[node name="Enemy1" parent="VD_Path/Vertical_Down_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+rotation = 0.005102
+
+[node name="Enemy2" parent="VD_Path/Vertical_Down_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(100, 0)
+rotation = 0.005102
+
+[node name="Enemy3" parent="VD_Path/Vertical_Down_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(200, 0)
+rotation = 0.005102
+
+[node name="Enemy4" parent="VD_Path/Vertical_Down_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(300, 0)
+rotation = 0.005102
+
+[node name="DL_Path" type="CharacterBody2D" parent="." node_paths=PackedStringArray("enemyPath")]
+script = ExtResource("1_67vh1")
+enemyPath = NodePath("Diagonal_Left_Path/PathFollow2D")
+
+[node name="Diagonal_Left_Path" type="Path2D" parent="DL_Path"]
+curve = SubResource("Curve2D_pt1la")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="DL_Path/Diagonal_Left_Path"]
+position = Vector2(-0.571185, 0.571185)
+rotation = -0.005102
+progress = 1.07802
+rotates = false
+
+[node name="Enemy1" parent="DL_Path/Diagonal_Left_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+rotation = 0.005102
+
+[node name="Enemy2" parent="DL_Path/Diagonal_Left_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(-100, 0)
+rotation = 0.005102
+
+[node name="Enemy3" parent="DL_Path/Diagonal_Left_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(-200, 0)
+rotation = 0.005102
+
+[node name="Enemy5" parent="DL_Path/Diagonal_Left_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(-300, 0)
+rotation = 0.005102
+
+[node name="DR_Path" type="CharacterBody2D" parent="." node_paths=PackedStringArray("enemyPath")]
+script = ExtResource("1_67vh1")
+enemyPath = NodePath("Diagonal_Right_Path/PathFollow2D")
+
+[node name="Diagonal_Right_Path" type="Path2D" parent="DR_Path"]
+curve = SubResource("Curve2D_03fn4")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="DR_Path/Diagonal_Right_Path"]
+position = Vector2(0.571185, 0.571185)
+rotation = -0.005102
+progress = 1.07802
+rotates = false
+
+[node name="Enemy1" parent="DR_Path/Diagonal_Right_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(1.99998, 0.0102005)
+rotation = 0.005102
+
+[node name="Enemy2" parent="DR_Path/Diagonal_Right_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(93.9835, 3.4795)
+rotation = 0.005102
+
+[node name="Enemy3" parent="DR_Path/Diagonal_Right_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(181.982, 3.9285)
+rotation = 0.005102
+
+[node name="Enemy4" parent="DR_Path/Diagonal_Right_Path/PathFollow2D" instance=ExtResource("2_0jqqh")]
+position = Vector2(269.976, 5.3775)
+rotation = 0.005102

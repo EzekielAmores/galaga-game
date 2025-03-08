@@ -1,0 +1,129 @@
+[gd_scene load_steps=9 format=3 uid="uid://cs72xsem0qhlp"]
+
+[ext_resource type="Script" path="res://Scripts/main_menu_ui.gd" id="1_sd5gq"]
+[ext_resource type="Texture2D" uid="uid://dnkete5yhtokf" path="res://Sprites/Background2.png" id="2_2kn4o"]
+[ext_resource type="Texture2D" uid="uid://bnfmxlhh8xyf7" path="res://Sprites/TitleScreen.png" id="3_5k760"]
+[ext_resource type="FontFile" uid="uid://cdo1tmc4hynq0" path="res://Font/RasterForgeRegular-JpBgm.ttf" id="4_joo3s"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_284er"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_oh4s8"]
+bg_color = Color(0.881541, 0.160807, 9.62615e-08, 0.47451)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_suddu"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+
+[sub_resource type="Theme" id="Theme_vo5o8"]
+Button/colors/font_outline_color = Color(1, 1, 1, 1)
+Button/colors/icon_normal_color = Color(1, 1, 1, 1)
+Button/styles/disabled = SubResource("StyleBoxFlat_284er")
+Button/styles/hover = SubResource("StyleBoxFlat_oh4s8")
+Button/styles/normal = SubResource("StyleBoxFlat_suddu")
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="MainMenuUI" type="Control" parent="CanvasLayer" node_paths=PackedStringArray("startButton", "quitButton")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 0
+script = ExtResource("1_sd5gq")
+startButton = NodePath("StartButton")
+quitButton = NodePath("QuitButton")
+
+[node name="Background" type="TextureRect" parent="CanvasLayer/MainMenuUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -575.0
+offset_top = -3.0
+offset_right = 584.0
+offset_bottom = 658.0
+grow_horizontal = 2
+texture = ExtResource("2_2kn4o")
+
+[node name="Title_Screen_Background" type="TextureRect" parent="CanvasLayer/MainMenuUI"]
+self_modulate = Color(0, 0, 0, 1)
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -264.0
+offset_top = 52.0
+offset_right = 252.0
+offset_bottom = 310.0
+grow_horizontal = 2
+scale = Vector2(1.02393, 1.02393)
+texture = ExtResource("3_5k760")
+
+[node name="Title_Screen" type="TextureRect" parent="CanvasLayer/MainMenuUI"]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -258.0
+offset_top = 48.0
+offset_right = 258.0
+offset_bottom = 306.0
+grow_horizontal = 2
+texture = ExtResource("3_5k760")
+
+[node name="StartButton" type="Button" parent="CanvasLayer/MainMenuUI"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 324.0
+offset_right = 130.0
+offset_bottom = 387.0
+grow_horizontal = 2
+theme = SubResource("Theme_vo5o8")
+theme_override_fonts/font = ExtResource("4_joo3s")
+theme_override_font_sizes/font_size = 70
+text = "Start"
+
+[node name="OptionsButton" type="Button" parent="CanvasLayer/MainMenuUI"]
+visible = false
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_right = 130.0
+offset_bottom = 63.0
+grow_horizontal = 2
+theme = SubResource("Theme_vo5o8")
+theme_override_fonts/font = ExtResource("4_joo3s")
+theme_override_font_sizes/font_size = 70
+text = "Options
+"
+
+[node name="QuitButton" type="Button" parent="CanvasLayer/MainMenuUI"]
+self_modulate = Color(0, 0, 0, 1)
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -130.0
+offset_top = 408.0
+offset_right = 130.0
+offset_bottom = 471.0
+grow_horizontal = 2
+theme = SubResource("Theme_vo5o8")
+theme_override_fonts/font = ExtResource("4_joo3s")
+theme_override_font_sizes/font_size = 70
+text = "Quit
+"

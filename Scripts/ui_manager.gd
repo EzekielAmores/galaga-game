@@ -28,7 +28,7 @@ func _process(delta: float) -> void:
 	
 	if player != null: # Check if player exist
 		hpText.text = "GPA: " + str(player.hp)
-		coinText.text = "C " + str(player.coin).pad_zeros(3)
+		coinText.text = str(player.coin).pad_zeros(3)
 		scoreText.text = str(player.score).pad_zeros(9)
 		
 		if player.hp > 5:
@@ -38,17 +38,14 @@ func _process(delta: float) -> void:
 		elif player.hp >= 3.5:
 			hpImage.texture = threeFiveGpa
 		elif player.hp >= 3:
-			print("TRES")
 			hpImage.texture = threeGpa
 		elif player.hp >= 2.5:
 			hpImage.texture = twoFiveGpa
 		elif player.hp >= 2:
-			print("DOS")
 			hpImage.texture = twoGpa
 		elif player.hp >= 1.5:
 			hpImage.texture = oneFiveGpa
 		elif player.hp >= 1:
-			print("UNO")
 			hpImage.texture = oneGpa
 	elif player == null and isDead == false:
 		

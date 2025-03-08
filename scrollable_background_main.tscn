@@ -1,0 +1,23 @@
+[gd_scene load_steps=3 format=3 uid="uid://b6csymxyrf0nl"]
+
+[ext_resource type="Texture2D" uid="uid://c5nko0yjr8c18" path="res://GameBackgroundNew.png" id="1_fdht1"]
+[ext_resource type="Texture2D" uid="uid://c8no5717rk4p5" path="res://BackgroundTransition.png" id="2_ieao5"]
+
+[node name="Scrollable_Background_Main" type="Node2D"]
+
+[node name="Background" type="Sprite2D" parent="."]
+self_modulate = Color(0.804743, 0.804743, 0.804743, 1)
+texture_filter = 1
+position = Vector2(6, -2170)
+scale = Vector2(7.43, 7.43)
+texture = ExtResource("1_fdht1")
+
+[node name="Background3" type="Sprite2D" parent="."]
+self_modulate = Color(0.804743, 0.804743, 0.804743, 1)
+texture_filter = 1
+position = Vector2(6, -7034)
+scale = Vector2(7.43, 7.43)
+texture = ExtResource("2_ieao5")
+
+[node name="ConnectorNode" type="Node2D" parent="."]
+position = Vector2(0, -6679)
