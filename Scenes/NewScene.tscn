@@ -26,11 +26,15 @@
 [ext_resource type="Script" path="res://Scripts/scrolling_background.gd" id="19_nwolk"]
 [ext_resource type="Script" path="res://Scripts/spawn_manager.gd" id="20_i02tg"]
 [ext_resource type="PackedScene" uid="uid://cbgdxfjbscp4a" path="res://Objects/coin.tscn" id="21_h22k7"]
-[ext_resource type="Script" path="res://Scripts/enemy_path_holder.gd" id="22_0tvbb"]
-[ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://Objects/enemy.tscn" id="23_m5iix"]
 [ext_resource type="Texture2D" uid="uid://c5nko0yjr8c18" path="res://GameBackgroundNew.png" id="24_4whse"]
 [ext_resource type="PackedScene" uid="uid://b6csymxyrf0nl" path="res://scrollable_background_main.tscn" id="24_hx2cd"]
 [ext_resource type="Texture2D" uid="uid://c8no5717rk4p5" path="res://BackgroundTransition.png" id="25_00266"]
+[ext_resource type="Script" path="res://Resources/wave.gd" id="30_8pfaw"]
+[ext_resource type="Resource" uid="uid://dh7luav28oij1" path="res://Resources/VerticalWave.tres" id="30_bf3dr"]
+[ext_resource type="PackedScene" uid="uid://cb1jkjtts3j6d" path="res://Resources/EnemyPaths/hl_path.tscn" id="30_c4y4f"]
+[ext_resource type="Resource" uid="uid://ciw23r4adb5bl" path="res://Resources/horizontalWave.tres" id="31_kgjkg"]
+[ext_resource type="PackedScene" uid="uid://1k7s0245tws1" path="res://Resources/EnemyPaths/hr_path.tscn" id="31_uh8im"]
+[ext_resource type="Resource" uid="uid://bliga14l6r5hh" path="res://Resources/alternateHorizontalWave.tres" id="33_jig4k"]
 
 [sub_resource type="QuadMesh" id="QuadMesh_evxul"]
 size = Vector2(100, 100)
@@ -50,23 +54,31 @@ size = Vector2(765, 246)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i02bu"]
 size = Vector2(696, 33)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_m2ymp"]
-
-[sub_resource type="Curve2D" id="Curve2D_tshhr"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 200, 0)
-}
-point_count = 2
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_3gu63"]
-
-[sub_resource type="Curve2D" id="Curve2D_8tk8n"]
-_data = {
-"points": PackedVector2Array(0, 0, 0, 0, 200, 0, 0, 0, 0, 0, 0, 0)
-}
-point_count = 2
-
 [node name="Node2D" type="Node2D"]
+
+[node name="NodeGeneral" type="Node2D" parent="."]
+position = Vector2(340, -383)
+
+[node name="Node2D" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-640, 8)
+
+[node name="Node2D2" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-540, 8)
+
+[node name="Node2D3" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-440, 8)
+
+[node name="Node2D4" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-340, 8)
+
+[node name="Node2D5" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-240, 8)
+
+[node name="Node2D6" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-140, 8)
+
+[node name="Node2D7" type="Node2D" parent="NodeGeneral"]
+position = Vector2(-40, 8)
 
 [node name="GameMasterManager" type="Node2D" parent="." node_paths=PackedStringArray("player")]
 script = ExtResource("1_rc38i")
@@ -505,7 +517,7 @@ text = "Quit"
 
 [node name="Scrolling_Background" type="Node2D" parent="Background" node_paths=PackedStringArray("first_Scrollable")]
 script = ExtResource("19_nwolk")
-speed = 150
+speed = 1000
 first_Scrollable = NodePath("Scrollable_Background_Main")
 scrollableCopy = ExtResource("24_hx2cd")
 
@@ -595,10 +607,13 @@ fireRate = 0.2
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
-[node name="SpawnManager" type="Node2D" parent="." node_paths=PackedStringArray("spawnedArea")]
+[node name="SpawnManager" type="Node2D" parent="." node_paths=PackedStringArray("gameMaster", "spawnedArea")]
 script = ExtResource("20_i02tg")
+gameMaster = NodePath("../GameMasterManager")
 spawnedArea = NodePath("Area2D/CollisionShape2D")
 coinInstance = ExtResource("21_h22k7")
+waves = Array[ExtResource("30_8pfaw")]([ExtResource("31_kgjkg"), ExtResource("30_bf3dr")])
+alternateWaves = Array[ExtResource("30_8pfaw")]([ExtResource("30_bf3dr"), ExtResource("33_jig4k")])
 
 [node name="Area2D" type="Area2D" parent="SpawnManager"]
 position = Vector2(-347, -472)
@@ -607,44 +622,8 @@ position = Vector2(-347, -472)
 position = Vector2(347, 86.5)
 shape = SubResource("RectangleShape2D_i02bu")
 
-[node name="HL_Path" type="CharacterBody2D" parent="." node_paths=PackedStringArray("enemyPath")]
-position = Vector2(-357, -276)
-script = ExtResource("22_0tvbb")
-enemyPath = NodePath("Horizontal_Left_Path/PathFollow2D")
-enemyScene = ExtResource("23_m5iix")
-numberOfEnemies = 3
-enemySpawnDirection = Vector2(1, 0)
+[node name="HL_Path" parent="." instance=ExtResource("30_c4y4f")]
+position = Vector2(959, -354)
 
-[node name="Placeholder" type="CollisionShape2D" parent="HL_Path"]
-shape = SubResource("RectangleShape2D_m2ymp")
-disabled = true
-
-[node name="Horizontal_Left_Path" type="Path2D" parent="HL_Path"]
-curve = SubResource("Curve2D_tshhr")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="HL_Path/Horizontal_Left_Path"]
-position = Vector2(0.905192, 0)
-rotation = -0.005102
-progress = 1.07802
-rotates = false
-
-[node name="HR_Path" type="CharacterBody2D" parent="." node_paths=PackedStringArray("enemyPath")]
-position = Vector2(340, -383)
-script = ExtResource("22_0tvbb")
-enemyPath = NodePath("Horizontal_Right_Path/PathFollow2D")
-enemyScene = ExtResource("23_m5iix")
-numberOfEnemies = 2
-enemySpawnDirection = Vector2(-1, 0)
-
-[node name="Placeholder" type="CollisionShape2D" parent="HR_Path"]
-shape = SubResource("RectangleShape2D_3gu63")
-disabled = true
-
-[node name="Horizontal_Right_Path" type="Path2D" parent="HR_Path"]
-position = Vector2(-200, 0)
-curve = SubResource("Curve2D_8tk8n")
-
-[node name="PathFollow2D" type="PathFollow2D" parent="HR_Path/Horizontal_Right_Path"]
-position = Vector2(200, 0)
-rotation = -0.005102
-rotates = false
+[node name="HR_Path" parent="." instance=ExtResource("31_uh8im")]
+position = Vector2(1656, -461)

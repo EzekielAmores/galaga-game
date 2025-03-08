@@ -1,0 +1,29 @@
+[gd_scene load_steps=5 format=3 uid="uid://b4nxtqokxh8ip"]
+
+[ext_resource type="Script" path="res://Scripts/enemy_path_holder.gd" id="1_5jj1b"]
+[ext_resource type="PackedScene" uid="uid://1nxe8ts7nrgp" path="res://Objects/enemy.tscn" id="2_cxmpt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i5n5t"]
+
+[sub_resource type="Curve2D" id="Curve2D_2tq7s"]
+_data = {
+"points": PackedVector2Array(0, 0, 0, 0, 0, 100, 0, 0, 0, 0, 0, 0)
+}
+point_count = 2
+
+[node name="VD_Path" type="CharacterBody2D" node_paths=PackedStringArray("enemyPath")]
+script = ExtResource("1_5jj1b")
+enemyPath = NodePath("Vertical_Down_Path/PathFollow2D")
+enemyScene = ExtResource("2_cxmpt")
+
+[node name="Placeholder" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_i5n5t")
+disabled = true
+
+[node name="Vertical_Down_Path" type="Path2D" parent="."]
+curve = SubResource("Curve2D_2tq7s")
+
+[node name="PathFollow2D" type="PathFollow2D" parent="Vertical_Down_Path"]
+position = Vector2(0, 100)
+rotation = -0.005102
+rotates = false

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="Wave" load_steps=4 format=3 uid="uid://dh7luav28oij1"]
+
+[ext_resource type="PackedScene" uid="uid://b4nxtqokxh8ip" path="res://Resources/EnemyPaths/vd_path.tscn" id="1_khwso"]
+[ext_resource type="PackedScene" uid="uid://cjxptkyv7565c" path="res://Resources/EnemyPaths/vu_path.tscn" id="2_a88sd"]
+[ext_resource type="Script" path="res://Resources/wave.gd" id="3_edv41"]
+
+[resource]
+script = ExtResource("3_edv41")
+noOfEnemiesPerLine = 1
+enemyPaths = Array[PackedScene]([ExtResource("1_khwso"), ExtResource("2_a88sd"), ExtResource("1_khwso"), ExtResource("2_a88sd"), ExtResource("1_khwso"), ExtResource("2_a88sd"), ExtResource("1_khwso")])

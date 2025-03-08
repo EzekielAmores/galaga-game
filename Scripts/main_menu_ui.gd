@@ -18,4 +18,5 @@ func start():
 
 func quit():
 	print("mu leave nako")
+	get_tree().quit()
 	

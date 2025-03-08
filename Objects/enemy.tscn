@@ -16,6 +16,7 @@ collision_mask = 0
 script = ExtResource("1_61vpo")
 bulletInstance = ExtResource("2_s7rwx")
 BulletTransform = NodePath("Spawnpoint")
+bulletDamage = 0.25
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_77e8f")

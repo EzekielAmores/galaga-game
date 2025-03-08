@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="Wave" load_steps=5 format=3 uid="uid://ciw23r4adb5bl"]
+
+[ext_resource type="PackedScene" uid="uid://cb1jkjtts3j6d" path="res://Resources/EnemyPaths/hl_path.tscn" id="1_07kvt"]
+[ext_resource type="Script" path="res://Resources/wave.gd" id="1_707nr"]
+[ext_resource type="PackedScene" uid="uid://b4nxtqokxh8ip" path="res://Resources/EnemyPaths/vd_path.tscn" id="2_s0p5g"]
+[ext_resource type="PackedScene" uid="uid://1k7s0245tws1" path="res://Resources/EnemyPaths/hr_path.tscn" id="3_7iwy2"]
+
+[resource]
+script = ExtResource("1_707nr")
+noOfEnemiesPerLine = 1
+enemyPaths = Array[PackedScene]([ExtResource("1_07kvt"), ExtResource("1_07kvt"), ExtResource("1_07kvt"), ExtResource("2_s0p5g"), ExtResource("3_7iwy2"), ExtResource("3_7iwy2"), ExtResource("3_7iwy2")])
